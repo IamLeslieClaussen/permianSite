@@ -1,5 +1,5 @@
 import { gsap, selector } from "gsap";
-import { SplitText } from "gsap/splitText";
+import { SplitText } from "./SplitText.min.js";
 import { type } from "os";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -54,5 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updateCounter();
       }, delay * 1000);
+
+      animateCounter(".preloader-counter p", 4.5, 2)
+
+      const tl = gsap.timeline()
     });
 });
