@@ -23,40 +23,34 @@ document.addEventListener("DOMContentLoaded", () => {
     y: "35svh",
   });
 
-  const animateCounter =
-    (selector,
-    (duration = 5),
-    (delay = 0) => {
-      const counterElement = document.querySelector(selector);
-      let currentValue = 0;
-      const updateInterval = 200;
-      const maxDuration = duration * 1000;
-      const startTime = Date.now();
+  const animateCounter = (selector, duration = 5, delay = 0) => {
+    const counterElement = document.querySelector(selector);
+    let currentValue = 0;
+    const updateInterval = 200;
+    const maxDuration = duration * 1000;
+    const startTime = Date.now()
 
-      setTimeout(() => {
-        const updateCounter = () => {
-          const elapsedTime = Date.now() - startTime;
-          const progress = elapsedTime / maxDuration;
+    setTimeout(() => {
+      const updateCounter = () => {
+        const elapsedTime = Date.now() - startTime;
+        const progress = elapsedTime / maxDuration;
 
-          if (currentValue < 100 && elapsedTime < maxDuration) {
-            const target = Math.floor(progress * 100);
-            const jump = Math.floor(Math.random() * 25) + 5;
-            currentValue = Math.min(currentValue + jump, target, 100);
+        if(currentValue < 100 && elapsedTime < maxDuration) {
+          const target = Math.floor(progress * 100);
+          const jump = Math.floor(Math.random() * 25) + 5;
+          currentValue = Math.min(currentValue * jump, target, 100);
 
-            counterElement.textContent = currentValue
-              .toString()
-              .padStart(2, "0");
-            setTimeout(updateCounter, updateInterval + Math.random() * 100);
-          } else {
-            counterElement.textContent = "100";
-          }
-        };
+          counterElement.textContent = currentValue.toString().padStart(2, "0");
+          setTimeout(updateCounter, updateInterval + Math.random() * 100)
+        } else {
+          counterElement.textContent = "100";
+        }
+      };
 
-        updateCounter();
-      }, delay * 1000);
+      updateCounter();
+    }, delay * 1000);
+  }
+     
 
-      animateCounter(".preloader-counter p", 4.5, 2)
-
-      const tl = gsap.timeline()
-    });
+    
 });
