@@ -1,7 +1,5 @@
 import { gsap } from "gsap";
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(SplitText);
 
@@ -28,20 +26,20 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentValue = 0;
     const updateInterval = 200;
     const maxDuration = duration * 1000;
-    const startTime = Date.now()
+    const startTime = Date.now();
 
     setTimeout(() => {
       const updateCounter = () => {
         const elapsedTime = Date.now() - startTime;
         const progress = elapsedTime / maxDuration;
 
-        if(currentValue < 100 && elapsedTime < maxDuration) {
+        if (currentValue < 100 && elapsedTime < maxDuration) {
           const target = Math.floor(progress * 100);
           const jump = Math.floor(Math.random() * 25) + 5;
           currentValue = Math.min(currentValue + jump, target, 100);
 
           counterElement.textContent = currentValue.toString().padStart(2, "0");
-          setTimeout(updateCounter, updateInterval + Math.random() * 100)
+          setTimeout(updateCounter, updateInterval + Math.random() * 100);
         } else {
           counterElement.textContent = "100";
         }
@@ -49,8 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       updateCounter();
     }, delay * 1000);
-  }
-     
+  };
+
   animateCounter(".preloader-counter p", 4.5, 2);
 
   const tl = gsap.timeline();
@@ -61,7 +59,48 @@ document.addEventListener("DOMContentLoaded", () => {
     stagger: 0.075,
     ease: "power3.out",
     delay: 1,
-  });
-  
-    
+  })
+    .to(
+      ".preloader-revealer",
+      {
+        scale: 0.1,
+        duration: 0.75,
+        ease: "power2.out",
+      },
+      "<"
+    )
+    .to(".preloader-revealer", {
+      scale: 0.25,
+      duration: 1,
+      ease: "power2.out",
+    })
+    .to(".preloader-revealer", {
+      scale: 0.5,
+      duration: 0.75,
+      ease: "power2.out",
+    })
+    .to(".preloader-revealer", {
+      scale: 0.75,
+      duration: 0.5,
+      ease: "power2.out",
+    })
+    .to(".preloader-revealer", {
+      scale: 1,
+      duration: 1,
+      ease: "power2.out",
+    })
+    .to(
+      ".preloader",
+      {
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+        duration: 1.25,
+        ease: "power3.out",
+      },
+      "-=1"
+    )
+    .to(["nav", "hero-img", "hero-content"], {
+      y: "0%",
+      duration: 1.25,
+      ease: "power3.out",
+    });
 });
